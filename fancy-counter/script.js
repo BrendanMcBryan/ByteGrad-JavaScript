@@ -5,13 +5,13 @@ const resetButtonEl = document.querySelector(".counter__reset-button");
 const counterValueEl = document.querySelector(".counter__value");
 const counterTitleEl = document.querySelector(".counter__title");
 
-resetButtonEl.addEventListener("click", function () {
+resetButtonEl.addEventListener("click", () => {
   counterValueEl.textContent = 0; // counterEl.classList.remove("counter--limit");
   counterEl.classList.remove("counter--limit");
   counterTitleEl.innerHTML = "Fancy Counter";
 });
 
-decreaseButtonEl.addEventListener("click", function () {
+decreaseButtonEl.addEventListener("click", () => {
   const currentValue = counterValueEl.textContent;
   const currentValueNumber = +currentValue;
   const newValue = currentValueNumber - 1;
@@ -23,7 +23,7 @@ decreaseButtonEl.addEventListener("click", function () {
   //   : (counterEl.classList.add("counter--limit");
 });
 
-function incrimentCounter() {
+const incrimentCounter = () => {
   const currentValue = counterValueEl.textContent;
   const currentValueNumber = +currentValue;
   let newValue = currentValueNumber + 1;
@@ -33,12 +33,12 @@ function incrimentCounter() {
     counterEl.classList.add("counter--limit");
     counterTitleEl.innerHTML =
       "Limit <span style='font-weight:800;'>reached</span>!";
-      // increaseButtonEl.disabled = true;
-      // decreaseButtonEl.disabled = true;
+    // increaseButtonEl.disabled = true;
+    // decreaseButtonEl.disabled = true;
   }
 
   counterValueEl.textContent = newValue;
-}
+};
 increaseButtonEl.addEventListener("click", incrimentCounter);
 
 document.addEventListener("keydown", incrimentCounter);
