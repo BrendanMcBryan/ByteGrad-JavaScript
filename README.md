@@ -11,4 +11,6 @@ Finished project on Monday, February 5, 2024.
 
 ### Mini-Project: Word Analytics
 Monday, February 5, 2024
-Project that allowes user to enter text and website analyzes charter and word counts, Also shows limits for Twitter and Facebook Posts
+Project that allowes user to enter text and website analyzes charter and word counts, Also shows limits for Twitter and Facebook Posts.
+
+Finished project on Monday, February 5, 2024

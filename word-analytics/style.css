@@ -90,7 +90,7 @@ body {
   border-bottom: 1px solid lightgray;
 }
 
-.stat:nth-child(2),
+.stat:nth-child(2), 
 .stat:nth-child(4) {
   border-left: 1px solid lightgray;
 }
@@ -102,6 +102,9 @@ body {
   margin-bottom: 10px;
 }
 
+.stat__number--limit {
+  color: crimson;
+}
 .second-heading {
   font-size: 14px;
   text-transform: uppercase;
