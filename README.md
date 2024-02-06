@@ -18,3 +18,5 @@ Finished project on Monday, February 5, 2024
 ### CorpComment
 Build a sleek public feedback tool. 
 Site where users can log and vote on requests to various corporations. 
+
+Finished: Tuesday, February 6, 2024
