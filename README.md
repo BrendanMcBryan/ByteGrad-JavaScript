@@ -23,4 +23,7 @@ Finished: Tuesday, February 6, 2024
 
 ### RmtDev
 Wednesday, February 7, 2024
-Software development Job Board with Persistena data features. Includes structuring, State and Rendering and the Build process
+Software development Job Board with Persistena data features. Includes structuring, State and Rendering and the Build process.
+
+Friday, February 9, 2024
+Coding is done, onto bpacking up for the web

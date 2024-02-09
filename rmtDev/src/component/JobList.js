@@ -1,6 +1,7 @@
 import {
   BASE_API_URL,
   jobListSearchEl,
+  jobListBookmarksEl,
   jobDetailsContentEl,
   getData,
   state,
@@ -13,17 +14,27 @@ import renderJobDetails from './JobDetails.js';
 
 // * JOBLIST COMPONENT
 
-const renderJobList = () => {
-  // remove previous job items
-  jobListSearchEl.innerHTML = '';
+const renderJobList = (whichJobList = 'search') => {
+  // determine correct selector for joblist (search or bookmarks)
+  const jobListEl =
+    whichJobList === 'search' ? jobListSearchEl : jobListBookmarksEl;
 
-  state.searchJobItems
-    .slice(
+  // remove previous job items
+  jobListEl.innerHTML = '';
+
+  //  determine job items
+  let jobItems;
+  if (whichJobList === 'search') {
+    jobItems = state.searchJobItems.slice(
       state.currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
       state.currentPage * RESULTS_PER_PAGE
-    )
-    .forEach((jobItem) => {
-      const newJobItemHTML = `
+    );
+  } else if (whichJobList === 'bookmarks') {
+    jobItems = state.bookmarkJobItems;
+  }
+
+  jobItems.forEach((jobItem) => {
+    const newJobItemHTML = `
         <li class="job-item ${
           state.activeJobItem.id === jobItem.id ? 'job-item--active' : ''
         }">
@@ -45,14 +56,18 @@ const renderJobList = () => {
                   </div>
               </div>
               <div class="job-item__right">
-                  <i class="fa-solid fa-bookmark job-item__bookmark-icon"></i>
+                  <i class="fa-solid fa-bookmark job-item__bookmark-icon ${
+                    state.bookmarkJobItems.some(
+                      (bookmarkJobItem) => bookmarkJobItem.id === jobItem.id
+                    ) && 'job-item__bookmark-icon--bookmarked'
+                  }"></i> 
                   <time class="job-item__time">${jobItem.daysAgo}d</time>
               </div>
           </a>
         </li>
     `;
-      jobListSearchEl.insertAdjacentHTML('beforeend', newJobItemHTML);
-    });
+    jobListEl.insertAdjacentHTML('beforeend', newJobItemHTML);
+  });
 };
 
 const clickHandler = async (event) => {
@@ -61,10 +76,10 @@ const clickHandler = async (event) => {
   const jobItemEl = event.target.closest('.job-item');
 
   document
-    .querySelector('.job-item--active')
-    ?.classList.remove('job-item--active');
-
-  jobItemEl.classList.add('job-item--active');
+    .querySelectorAll('.job-item--active')
+    .forEach((jobItemWithActiveClass) =>
+      jobItemWithActiveClass.classList.remove('job-item--active')
+    );
 
   jobDetailsContentEl.innerHTML = '';
 
@@ -72,9 +87,11 @@ const clickHandler = async (event) => {
 
   const id = jobItemEl.children[0].getAttribute('href');
 
-  state.activeJobItem = state.searchJobItems.find(
-    (jobItem) => jobItem.id === +id
-  );
+  const allJobItems = [...state.searchJobItems, ...state.bookmarkJobItems];
+
+  state.activeJobItem = allJobItems.find((jobItem) => jobItem.id === +id);
+
+  renderJobList();
 
   history.pushState(null, '', `/#${id}`);
 
@@ -95,5 +112,6 @@ const clickHandler = async (event) => {
 };
 
 jobListSearchEl.addEventListener('click', clickHandler);
+jobListBookmarksEl.addEventListener('click', clickHandler);
 
 export default renderJobList;
